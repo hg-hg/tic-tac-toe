@@ -23,9 +23,8 @@ class Board extends React.Component {
     renderRow(row) {
         let content;
         for (let col = 0; col < 3; ++col) {
-            content = <React.Fragment>{content} {this.renderSquare(row * 3 + col)}</React.Fragment >;
+            content = <>{content} {this.renderSquare(row * 3 + col)}</>;
         }
-        console.log(content);
         return <div className="board-row">{content}</div>;
     }
 
@@ -47,6 +46,7 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             xIsNext: true,
+            historyIsAsc: true,
         };
     }
 
@@ -120,7 +120,12 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    <div>
+                        <button onClick={() => this.setState({ historyIsAsc: !this.state.historyIsAsc })}>
+                            Switch to {this.state.historyIsAsc ? "descending" : "ascending"}
+                        </button>
+                        <ol>{this.state.historyIsAsc ? moves : moves.reverse()}</ol>
+                    </div>
                 </div>
             </div>
         );
